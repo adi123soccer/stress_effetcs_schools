@@ -1,0 +1,37 @@
+---
+title: "Stress_affects_students"
+author: "Aditya Narayan"
+format: html
+execute: 
+  echo: false
+  warning: false
+---
+
+```{r}
+#| message: false
+library(tidyverse)
+students_data <- read_csv("StressLevelDataset.csv")
+students_data
+```
+
+```{r}
+
+students_data |>
+  ggplot(aes(x = academic_performance, y = stress_level, color = factor(mental_health_history))) +
+  geom_jitter(alpha = 0.2, size  = 2) +
+  geom_smooth(method = "lm") +
+  scale_color_manual(values = c("0" = "black", "1" = "red"), labels = c("No Mental Health Issue", "Mental Health Issue")) +
+  labs(color = "Mental Health History",
+       x = "Academic Performance",
+       y = "Stress Levels",
+       fill = "Mental Health History",
+       title = "Academic Performance Based on Stress levels and Mental Health History",
+  subtitle = "Students with a mental health history report higher stress levels despite\n similar academic performance.") +
+  theme_minimal() +
+  theme_minimal(base_size = 9) +
+theme(
+  panel.grid.major = element_line(size = 0.5, linetype = 'dashed'),
+  axis.title = element_text(size = 12),
+  axis.text = element_text(size = 10)
+)  
+```
